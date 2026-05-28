@@ -1,0 +1,33 @@
+{
+  "name": "paidmcp-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Forkable template for paid MCP servers with x402 and Tether WDK.",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "wallet:create": "tsx src/scripts/wallet-create.ts",
+    "wallet:info": "tsx src/scripts/wallet-info.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "latest",
+    "@tetherto/wdk-wallet-evm": "latest",
+    "@x402/core": "latest",
+    "@x402/evm": "latest",
+    "@x402/express": "latest",
+    "better-sqlite3": "latest",
+    "bip39": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "latest",
+    "@types/express": "latest",
+    "@types/node": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
