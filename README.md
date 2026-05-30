@@ -18,13 +18,13 @@ npm run dev
 
 Run inside `template/` after `npm install`.
 
-| Command | Role | What it does |
-|---------|------|--------------|
-| `npm run wallet:create` | Server receiver | Prints a new seed phrase. Paste it into `.env` as `SEED_PHRASE`. |
-| `npm run wallet:info` | Server receiver | Shows receiver address plus Base USDC and Plasma USDT0 balances. |
-| `npm run calls:recent` | Server operator | Shows the last paid calls from SQLite. |
-| `npm run dev` | Server operator | Starts the local server and creates the SQLite DB automatically. |
-| `npm run build && npm start` | Server operator | Runs compiled server code. |
+| Command                      | Role            | What it does                                                     |
+| ---------------------------- | --------------- | ---------------------------------------------------------------- |
+| `npm run wallet:create`      | Server receiver | Prints a new seed phrase. Paste it into `.env` as `SEED_PHRASE`. |
+| `npm run wallet:info`        | Server receiver | Shows receiver address plus Base USDC and Plasma USDT0 balances. |
+| `npm run calls:recent`       | Server operator | Shows the last paid calls from SQLite.                           |
+| `npm run dev`                | Server operator | Starts the local server and creates the SQLite DB automatically. |
+| `npm run build && npm start` | Server operator | Runs compiled server code.                                       |
 
 ## Two wallets to keep separate
 
@@ -70,4 +70,4 @@ See `.env.example` for all variables.
 
 ## License
 
-MIT
+MIT. See `LICENSE`.
