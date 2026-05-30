@@ -9,25 +9,26 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "wallet:create": "tsx src/scripts/wallet-create.ts",
-    "wallet:info": "tsx src/scripts/wallet-info.ts"
+    "wallet:info": "tsx src/scripts/wallet-info.ts",
+    "calls:recent": "tsx src/scripts/calls-recent.ts"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "latest",
-    "@tetherto/wdk-wallet-evm": "latest",
-    "@x402/core": "latest",
-    "@x402/evm": "latest",
-    "@x402/express": "latest",
-    "better-sqlite3": "latest",
-    "bip39": "latest",
-    "dotenv": "latest",
-    "express": "latest",
-    "zod": "latest"
+    "@coinbase/x402": "^2.1.0",
+    "@tetherto/wdk-wallet-evm": "^1.0.0-beta.12",
+    "@x402/core": "^2.13.0",
+    "@x402/evm": "^2.13.0",
+    "@x402/express": "^2.13.0",
+    "better-sqlite3": "^12.10.0",
+    "bip39": "^3.1.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "latest",
-    "@types/express": "latest",
-    "@types/node": "latest",
-    "tsx": "latest",
-    "typescript": "latest"
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3",
+    "typescript": "^6.0.3"
   }
 }
