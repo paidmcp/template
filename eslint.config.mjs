@@ -10,11 +10,11 @@ export default tseslint.config(
     files: ["src/**/*.ts"],
     languageOptions: {
       globals: {
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     rules: {
-      "@typescript-eslint/no-explicit-any": "off"
-    }
-  }
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 );

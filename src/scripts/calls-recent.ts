@@ -4,11 +4,11 @@ import { config } from "../config.js";
 const db = new Database(config.DB_PATH, { readonly: true });
 const rows = db
   .prepare(
-    `SELECT id, tool_name, payer_address, amount_usdt, tx_hash,
+    `SELECT id, tool_name, payer_address, amount_usdt, tx_hash, is_trial,
             datetime(timestamp / 1000, 'unixepoch') AS at, success, error_message
      FROM calls
      ORDER BY id DESC
-     LIMIT 20`
+     LIMIT 20`,
   )
   .all();
 

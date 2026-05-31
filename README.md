@@ -1,6 +1,6 @@
 # paidmcp/template
 
-Build MCP servers that charge per call in USDC (Base) or USDT0 (Plasma), powered by x402 + Tether WDK.
+Build native Streamable HTTP MCP servers that charge per call with x402.
 
 ## Quickstart
 
@@ -8,65 +8,61 @@ Run inside `template/`:
 
 ```bash
 npm install
-cp .env.example .env
-npm run wallet:create
-# paste seed into .env as SEED_PHRASE
+npm run setup
 npm run dev
 ```
+
+Default setup is `NETWORK_MODE=test` so you can start with Base Sepolia before switching to live mode.
 
 ## Commands
 
 Run inside `template/` after `npm install`.
 
-| Command                      | Role            | What it does                                                     |
-| ---------------------------- | --------------- | ---------------------------------------------------------------- |
-| `npm run wallet:create`      | Server receiver | Prints a new seed phrase. Paste it into `.env` as `SEED_PHRASE`. |
-| `npm run wallet:info`        | Server receiver | Shows receiver address plus Base USDC and Plasma USDT0 balances. |
-| `npm run calls:recent`       | Server operator | Shows the last paid calls from SQLite.                           |
-| `npm run dev`                | Server operator | Starts the local server and creates the SQLite DB automatically. |
-| `npm run build && npm start` | Server operator | Runs compiled server code.                                       |
+| Command                      | What it does                                                     |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `npm run setup`              | creates `.env` defaults, generates `SEED_PHRASE`, sets test mode |
+| `npm run wallet:create`      | prints a new receiver seed phrase                                |
+| `npm run wallet:info`        | shows receiver address plus Base/Plasma balances                 |
+| `npm run calls:recent`       | shows recent paid/trial calls from SQLite                        |
+| `npm run dev`                | starts the native MCP server at `/mcp`                           |
+| `npm run build && npm start` | runs compiled server                                             |
 
-## Two wallets to keep separate
+## Endpoints
 
-- **Receiver wallet (server):** created by `npm run wallet:create` and stored in this project's `.env` as `SEED_PHRASE`.
-- **Payer wallet (client):** created in `client/` with `npm run init`, stored in `~/.paidmcp/config.json`.
+- Native MCP endpoint: `POST/GET/DELETE /mcp`
+- Compatibility listing endpoint: `GET /mcp/tools`
 
-Fund the payer wallet for test calls. The server receiver wallet should not be funded manually for normal flow.
+Tool authoring stays in `src/tools.ts`. The server automatically exposes those tools over MCP and enforces x402 for `tools/call`.
 
-## Unpaid test
+## Free trial + payment behavior
 
-```bash
-curl -X POST http://localhost:4021/tools/echo \
-  -H "Content-Type: application/json" \
-  -d '{"message":"hello"}'
-```
-
-Expected result: HTTP `402` with x402 payment requirements.
+- `FREE_TRIAL_CALLS` controls how many successful trial calls each payer gets.
+- After trial quota, tool calls require x402 settlement.
+- Successful paid calls and successful trial calls are both logged in SQLite (`is_trial` column).
 
 ## Key files
 
-- `src/tools.ts` - add or modify paid tools (primary customization file)
-- `src/server.ts` - MCP + x402 + HTTP routes wiring
+- `src/tools.ts` - define paid tools (`name`, `description`, `priceUsdt`, schema, handler)
+- `src/server.ts` - MCP transport + per-tool x402 enforcement + trial handling
 - `src/config.ts` - env validation
-- `src/wallet.ts` - wallet wrapper
 - `src/log.ts` - SQLite call logging
+- `src/payments.ts` - facilitator + x402 scheme wiring
 
 ## Environment
 
 See `.env.example` for all variables.
 
-### Facilitator setup
-
-- **Base (USDC):** `BASE_FACILITATOR_URL` (default in `.env.example` is Coinbase CDP).
-- **Plasma (USDT0):** `PLASMA_FACILITATOR_URL` (default is Semantic).
-- To disable a network, set that URL to an empty string (`""`).
-- If using Coinbase CDP on Base, set `CDP_API_KEY_ID` and `CDP_API_KEY_SECRET`.
+- `NETWORK_MODE=test|live` controls default network/facilitator behavior.
+- Leave `BASE_FACILITATOR_URL` empty to use mode defaults.
+- For live Coinbase facilitator, set `CDP_API_KEY_ID` + `CDP_API_KEY_SECRET`.
 
 ## Deployment
 
 - Fly.io config: `deploy/fly.toml`
 - Railway config: `deploy/railway.json`
 - Dockerfile: `deploy/Dockerfile`
+
+`deploy/fly.toml` sets `DB_PATH=/app/data/paidmcp.db` so SQLite persists on the mounted volume.
 
 ## License
 

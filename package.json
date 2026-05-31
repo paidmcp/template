@@ -8,6 +8,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
+    "setup": "tsx src/scripts/setup.ts",
     "lint": "eslint \"src/**/*.ts\" --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,yml,yaml}\"",
@@ -18,6 +19,7 @@
     "calls:recent": "tsx src/scripts/calls-recent.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@coinbase/x402": "^2.1.0",
     "@tetherto/wdk-wallet-evm": "^1.0.0-beta.12",
     "@x402/core": "^2.13.0",
