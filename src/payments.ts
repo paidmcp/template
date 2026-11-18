@@ -30,7 +30,7 @@ function acceptsFor(tool: PaidTool, payTo: string): Accepts {
       price: {
         asset: config.USDC_ADDRESS,
         amount,
-        extra: { name: "USD Coin", version: "2", decimals: 6 },
+        extra: { name: config.USDC_EIP712_NAME, version: "2", decimals: 6 },
       },
     });
   }
@@ -74,8 +74,7 @@ function toolNameFromContext(ctx: {
   paymentPayload?: { resource?: { url?: string } };
 }): string {
   const tc = ctx.transportContext as
-    | { request?: { path?: string }; path?: string }
-    | undefined;
+    { request?: { path?: string }; path?: string } | undefined;
   const path = tc?.request?.path ?? tc?.path;
   if (path?.startsWith("/tools/")) return path.slice("/tools/".length);
 

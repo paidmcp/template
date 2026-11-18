@@ -1,30 +1,34 @@
 {
   "name": "paidmcp-template",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Forkable template for paid MCP servers with x402 and Tether WDK.",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
     "setup": "tsx src/scripts/setup.ts",
-    "lint": "eslint \"src/**/*.ts\" --max-warnings=0",
-    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" --max-warnings=0",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
+    "test": "node --import tsx --test test/*.test.ts",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,md,yml,yaml}\"",
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,md,yml,yaml}\"",
-    "check": "npm run lint && npm run typecheck && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run build && npm test",
     "wallet:create": "tsx src/scripts/wallet-create.ts",
     "wallet:info": "tsx src/scripts/wallet-info.ts",
     "calls:recent": "tsx src/scripts/calls-recent.ts"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
     "@coinbase/x402": "^2.1.0",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@tetherto/wdk-wallet-evm": "^1.0.0-beta.12",
-    "@x402/core": "^2.13.0",
-    "@x402/evm": "^2.13.0",
-    "@x402/express": "^2.13.0",
+    "@x402/core": "^2.31.0",
+    "@x402/evm": "^2.31.0",
+    "@x402/express": "^2.31.0",
     "better-sqlite3": "^12.10.0",
     "bip39": "^3.1.0",
     "dotenv": "^17.4.2",
@@ -40,7 +44,7 @@
     "globals": "^16.5.0",
     "prettier": "^3.6.2",
     "tsx": "^4.22.3",
-    "typescript-eslint": "^8.46.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.46.4"
   }
 }

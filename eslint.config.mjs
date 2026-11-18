@@ -3,11 +3,11 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist/**", "node_modules/**"] },
+  { ignores: ["dist/**", "node_modules/**", "test/.tmp/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ["src/**/*.ts"],
+    files: ["src/**/*.ts", "test/**/*.ts"],
     languageOptions: {
       globals: {
         ...globals.node,
